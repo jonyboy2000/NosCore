@@ -60,6 +60,7 @@ namespace NosCore.GameObject
             RelationWithCharacter = new ConcurrentDictionary<Guid, CharacterRelation>();
             GroupRequestCharacterIds = new ConcurrentDictionary<long, long>();
             Group = new Group(GroupType.Group);
+            TradeRequests = new ConcurrentDictionary<Guid, long>();
         }
 
         private readonly ILogger _logger = Logger.GetLoggerConfiguration().CreateLogger();
@@ -82,7 +83,9 @@ namespace NosCore.GameObject
 
         public ConcurrentDictionary<long, long> FriendRequestCharacters { get; set; }
 
-        public DateTime LastPortal { get; set; }
+        public ConcurrentDictionary<Guid, long> TradeRequests { get; set; }
+
+        public double LastPortal { get; set; }
 
         public ClientSession Session { get; set; }
 
@@ -95,8 +98,12 @@ namespace NosCore.GameObject
         public bool Camouflage { get; set; }
 
         public bool Invisible { get; set; }
+
         public IInventoryService Inventory { get; set; }
+
         public bool InExchangeOrTrade { get; set; }
+
+        public bool HasShopOpened { get; set; }
 
         public Group Group { get; set; }
 

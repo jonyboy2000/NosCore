@@ -47,9 +47,14 @@ namespace NosCore.GameObject.ComponentEntities.Interfaces
         bool Camouflage { get; }
 
         bool Invisible { get; }
+
         IChannel Channel { get; }
        
         bool GroupRequestBlocked { get; }
+
+        bool HasShopOpened { get; }
+
+        bool InExchangeOrTrade { get; }
 
         void SendPacket(PacketDefinition packetDefinition);
 
