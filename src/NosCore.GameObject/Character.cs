@@ -61,11 +61,14 @@ namespace NosCore.GameObject
             GroupRequestCharacterIds = new ConcurrentDictionary<long, long>();
             Group = new Group(GroupType.Group);
             TradeRequests = new ConcurrentDictionary<Guid, long>();
+            ExchangeData = new ExchangeData();
         }
 
         private readonly ILogger _logger = Logger.GetLoggerConfiguration().CreateLogger();
 
         public ConcurrentDictionary<long, long> GroupRequestCharacterIds { get; set; }
+
+        public ExchangeData ExchangeData { get; set; }
 
         public AccountDto Account { get; set; }
 

@@ -54,7 +54,7 @@ namespace NosCore.GameObject.ComponentEntities.Interfaces
 
         bool HasShopOpened { get; }
 
-        bool InExchangeOrTrade { get; }
+        bool InExchangeOrTrade { get; set; }
 
         void SendPacket(PacketDefinition packetDefinition);
 
@@ -76,5 +76,7 @@ namespace NosCore.GameObject.ComponentEntities.Interfaces
         ConcurrentDictionary<Guid, CharacterRelation> RelationWithCharacter { get; }
 
         ConcurrentDictionary<long, long> GroupRequestCharacterIds { get; }
+
+        ExchangeData ExchangeData { get; }
     }
 }
