@@ -37,6 +37,7 @@ using NosCore.Packets.CommandPackets;
 using NosCore.Packets.ServerPackets;
 using NosCore.Shared.Enumerations;
 using NosCore.Shared.Enumerations.Account;
+using NosCore.Shared.Enumerations.Character;
 using NosCore.Shared.Enumerations.Interaction;
 using NosCore.Shared.Enumerations.Items;
 using NosCore.Shared.I18N;
@@ -330,6 +331,14 @@ namespace NosCore.Controllers
                 s.SendPacket(Session.Character.GenerateEff(6));
                 s.SendPacket(Session.Character.GenerateEff(198));
             });
+
+            foreach (var member in Session.Character.Group.Keys)
+            {
+                var groupMember = Broadcaster.Instance.GetCharacter(s => s.VisualId == member.Item2 && member.Item1 == VisualType.Player);
+
+                groupMember?.SendPacket(groupMember.Group.GeneratePinit());
+            }
+
             Session.SendPacket(Session.Character.Group.GeneratePinit());
             Session.SendPacket(new MsgPacket { Type = MessageType.Whisper, Message = Language.Instance.GetMessageFromKey(LanguageKey.LEVEL_CHANGED, Session.Account.Language) });
         }
@@ -337,7 +346,7 @@ namespace NosCore.Controllers
         [UsedImplicitly]
         public void JobLevel(SetJobLevelCommandPacket jobLevelPacket)
         {
-            Session.Character.JobLevel = jobLevelPacket.Level;
+            Session.Character.JobLevel = (byte)((CharacterClassType)Session.Character.Class == CharacterClassType.Adventurer && jobLevelPacket.Level > 20 ? 20 : jobLevelPacket.Level);
             Session.Character.JobLevelXp = 0;
             Session.SendPacket(Session.Character.GenerateLev());
             var mapSessions = Broadcaster.Instance.GetCharacters(s => s.MapInstance == Session.Character.MapInstance);
